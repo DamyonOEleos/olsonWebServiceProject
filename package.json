@@ -1,5 +1,23 @@
 {
   "dependencies": {
     "mongoose": "^7.6.3"
-  }
+  },
+  "name": "olsonwebserviceproject",
+  "description": "Web service project for Eleos Technologies.\r ## TO DO LIST\r - [X] Decide on a language / framework [JavaScript/Node.js]\r - [ ] Get a boilerplate server running\r - [ ] Implement endpoints:\r   - [ ] (POST) **Login**\r     - [ ] Takes in a username/password\r     - [ ] Returns a user object and a token to be used for verification\r     - [ ] \r   - [ ] (GET) **Verifies**\r     - [ ] Use token recieved from **Login** to verify periodically as the user uses the app and ensures that they should still be logged in. Instead of a user/pass it sends a token\r   - [ ] (GET) **Load**\r     - [ ] Returns a list/array of load objects\r   - [ ] (PUT) **Message**\r     - [ ] Message data sent to this endpoint\r ## Endpoints",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DamyonOEleos/olsonWebServiceProject.git"
+  },
+  "author": "Damyon Olson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DamyonOEleos/olsonWebServiceProject/issues"
+  },
+  "homepage": "https://github.com/DamyonOEleos/olsonWebServiceProject#readme"
 }
