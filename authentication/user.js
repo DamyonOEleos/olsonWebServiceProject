@@ -6,15 +6,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.schema
 
 const authenticateSchema = new Schema({
-    api_token: {
-        type: String,
-        required: true
-    },
     full_name: {
         type: String,
         required: true
     },
-    username: {
+    api_token: {
         type: String,
         required: true
     },
@@ -27,6 +23,10 @@ const authenticateSchema = new Schema({
         required: false
     },
     custom_settings_form_code: {
+        type: String,
+        requitrd: false
+    },
+    username: {
         type: String,
         required: false
     }
