@@ -50,3 +50,16 @@ app.get('/loads', (req, res) => {
         message: `Loads!`
     })
 })
+
+/*
+    Updates needed for the following call -
+        * Connect to DB
+        * Body params for PUT request
+*/
+app.put('/messages/:handle', (req, res) => {
+    const { handle } = req.params;
+
+    res.send({
+        message: 'Messages'
+    })
+})
