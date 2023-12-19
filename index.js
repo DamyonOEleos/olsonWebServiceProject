@@ -29,3 +29,24 @@ app.post('/authenticate', (req, res) => {
     })
 })
 
+/*
+    Updates needed for the following call - 
+        * Connect authenticate with DB
+        * Only send correct response when token matches whats needed
+*/
+app.get('/authenticate/:token', (req, res) => {
+    const { token } = req.params
+    res.send({
+        message: `Found user with token: ${token}`
+    })
+})
+
+/*
+    Updates needed for following call - 
+        * Connect to DB so it can return a list of loads
+*/
+app.get('/loads', (req, res) => {
+    res.send({
+        message: `Loads!`
+    })
+})
