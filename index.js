@@ -21,7 +21,7 @@ app.post('/authenticate', (req, res) => {
     const { is_team_driver_login } = req.body
 
     if(!username | !password) {
-        res.status(401).send({message: 'Unauthorized due to invalid username or password.'})
+        res.status(418).send({message: 'Unauthorized due to invalid username or password.'})
     }
 
     res.send({
