@@ -1,9 +1,22 @@
+// Set up required dependencies
+require('dotenv').config()
 const express = require("express");
+const mongoose = require("mongoose")
+
+// App and Port For local Host
 const app = express();
 const PORT = 8080;
 
+// Parse json bodies
 app.use(express.json())
 
+// DB connection
+const dbURI = process.env.MONGO_DB_URI
+mongoose.connect(dbURI)
+    .then(console.log("DB Connected"))
+    .catch(err => console.log(err))
+
+// Local host listen
 app.listen(
     PORT,
     () => console.log(`API ready at http://localhost:${PORT}`)
