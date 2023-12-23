@@ -22,6 +22,10 @@ app.listen(
     () => console.log(`API ready at http://localhost:${PORT}`)
 )
 
+// Schemas
+
+const Loads = require('./schemas/loads')
+
 /*
     Updates needed for the following call : 
         * Connect to a DB (MongoDB or other)
