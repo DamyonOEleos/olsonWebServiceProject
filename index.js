@@ -12,10 +12,14 @@ app.use(express.json())
 
 // DB connection
 const dbURI = process.env.MONGO_DB_URI
-mongoose.connect(dbURI)
+
+async function run(){
+    await mongoose.connect(dbURI)
     .then(console.log("DB Connected"))
     .catch(err => console.log(err))
+}
 
+run()
 // Local host listen
 app.listen(
     PORT,
@@ -63,8 +67,13 @@ app.get('/authenticate/:token', (req, res) => {
         * Connect to DB so it can return a list of loads
 */
 app.get('/loads', (req, res) => {
-    res.send({
-        message: `Loads!`
+    Loads.find({})
+    .then((load) => {
+        res.json(load)
+        console.log(load)
+    }).catch((err) => {
+        console.log(err)
+        res.status(401)
     })
 })
 

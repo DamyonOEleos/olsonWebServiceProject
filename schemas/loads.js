@@ -1,3 +1,6 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
 const LoadsSchema = new Schema({
     id : {
         type: String,
@@ -40,4 +43,4 @@ const LoadsSchema = new Schema({
     },
 })
 
-module.exports = LOADS = mongoose.module('load', LoadsSchema)
+module.exports = LOADS = mongoose.model('Loads', LoadsSchema)
