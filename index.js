@@ -31,11 +31,30 @@ app.listen(
 const Loads = require('./schemas/loads')
 const Users = require('./schemas/users')
 
+
 /*
-    Updates needed for the following call : 
-        * Connect to a DB (MongoDB or other)
-        * Only res.send if the username exists in the db, as well as if the username matches
-          the password within the DB
+    Hello World
+*/
+app.get('/', (req, res) => {
+    return res.json({message : `Hello World`})
+})
+
+/*
+    POST
+     ./authenticate is a POST method that takes in the username and password of a user
+     and responds with a user schema including the username, password, full_name and most
+     importantly, the api_token for the user. The api_token is used to ensure that the correct
+     user is logged in and is checked periodically in the authenticate GET method. 
+
+    Required Body : username, password, is_team_driver_login
+        username - the username of the user
+        password - the password for the user associated with the username
+        is_team_driver_login - wether or not the user is a team driver or not
+
+    Response codes : 
+        200 - Successful
+        400 - Bad request
+        401 - Invalid username or password or user was not found
 */
 app.post('/authenticate', (req, res) => {
     const { username, password, is_team_driver_login } = req.body
@@ -55,7 +74,7 @@ app.post('/authenticate', (req, res) => {
         return res.status(200).json(user)
     }).catch((err) => {
         console.log(err)
-        res.status(401)
+        res.status(400).json({message : `Bad request`})
     })
 })
 
