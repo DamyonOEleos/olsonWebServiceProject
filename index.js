@@ -29,6 +29,7 @@ app.listen(
 // Schemas
 
 const Loads = require('./schemas/loads')
+const Users = require('./schemas/users')
 
 /*
     Updates needed for the following call : 
@@ -37,16 +38,19 @@ const Loads = require('./schemas/loads')
           the password within the DB
 */
 app.post('/authenticate', (req, res) => {
-    const { username } = req.body
-    const { password } = req.body
-    const { is_team_driver_login } = req.body
+    const { username, password, is_team_driver_login } = req.body
 
-    if(!username | !password) {
-        res.status(418).send({message: 'Unauthorized due to invalid username or password.'})
-    }
-
-    res.send({
-        user: `User with the username ${username} found`,
+    Users.findOne({username}).then((user) => {
+        if(!user){
+            console.log('User not found')
+            return res.status(401).json({message : `User ${username} not found`})
+        }
+        
+        res.status(200).json(user)
+        console.log(user)
+    }).catch((err) => {
+        console.log(err)
+        res.status(401)
     })
 })
 
