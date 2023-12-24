@@ -40,7 +40,7 @@ const Users = require('./schemas/users')
 app.post('/authenticate', (req, res) => {
     const { username, password, is_team_driver_login } = req.body
 
-    Users.findOne({username}).then((user) => {
+    Users.findOne({ username: {$regex: new RegExp(username, 'i') } }).then((user) => {
         if(!user){
             console.log('User not found')
             return res.status(401).json({message : `User ${username} not found`})
