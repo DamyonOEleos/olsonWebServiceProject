@@ -25,6 +25,7 @@ const UsersSchema = new Schema({
         },
         versionKey: false,
     },
+    collection: 'authentication'
 })
 
 module.exports = USERS = mongoose.model('Users', UsersSchema)

@@ -46,8 +46,13 @@ app.post('/authenticate', (req, res) => {
             return res.status(401).json({message : `User ${username} not found`})
         }
         
-        res.status(200).json(user)
+        if(user.password !== password) {
+            console.log(`Incorrect Password for user ${username}`)
+            return res.status(401).json({message : `Password incorrect`})
+        }
+
         console.log(user)
+        return res.status(200).json(user)
     }).catch((err) => {
         console.log(err)
         res.status(401)
