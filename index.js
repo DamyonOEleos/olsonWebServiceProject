@@ -132,6 +132,10 @@ app.put('/messages/:handle', (req, res) => {
         return res.status(401).json({message : `Error 401 : Missing or invalid API key`})
     }
 
+    if(!direction | !username | !message_type){
+        return res.status(400).json({message: `Required parameters not met`})
+    }
+
     const message = new Messages({
         direction: direction,
         username: username,
