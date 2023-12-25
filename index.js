@@ -28,8 +28,9 @@ app.listen(
 
 // Schemas
 
-const Loads = require('./schemas/loads')
-const Users = require('./schemas/users')
+const Loads    = require('./schemas/loads')
+const Users    = require('./schemas/users')
+const Messages = require('./schemas/messages')
 
 
 /*
@@ -122,8 +123,27 @@ app.get('/loads', (req, res) => {
 */
 app.put('/messages/:handle', (req, res) => {
     const { handle } = req.params;
+    const direction = req.body.direction
+    const username = req.body.username
+    const message_type = req.body.message_type
+    const EPK = req.headers['eleos-platform-key']
 
-    
+    if(EPK !== process.env.ELEOS_PLATFORM_KEY){
+        return res.status(401).json({message : `Error 401 : Missing or invalid API key`})
+    }
+
+    const message = new Messages({
+        direction: direction,
+        username: username,
+        message_type: message_type
+    })
+    message.save().then(
+        res.json(handle)
+    ).catch((err) => {
+        console.log(err)
+        res.status(401)
+    })
+
     res.send({
         message: 'Messages'
     })
