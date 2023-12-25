@@ -58,6 +58,11 @@ app.get('/', (req, res) => {
 */
 app.post('/authenticate', (req, res) => {
     const { username, password, is_team_driver_login } = req.body
+    const EPK = req.headers['eleos-platform-key']
+
+    if(EPK !== process.env.ELEOS_PLATFORM_KEY){
+        return res.status(401).json({message : `Error 401 : Missing or invalid API key`})
+    }
 
     Users.findOne({ username: {$regex: new RegExp(username, 'i') } }).then((user) => {
         if(!user){
@@ -95,7 +100,7 @@ app.get('/authenticate/:token', (req, res) => {
         * Connect to DB so it can return a list of loads
 */
 app.get('/loads', (req, res) => {
-    EPK = req.headers['eleos-platform-key']
+    const EPK = req.headers['eleos-platform-key']
 
     if(EPK !== process.env.ELEOS_PLATFORM_KEY){
         return res.status(401).json({message : `Error 401 : Missing or invalid API key`})
