@@ -20,6 +20,7 @@ async function run(){
 }
 
 run()
+
 // Local host listen
 app.listen(
     PORT,
@@ -34,7 +35,7 @@ const Messages = require('./schemas/messages')
 
 
 /*
-    Hello World
+    Sample 'Hello World' for GET
 */
 app.get('/', (req, res) => {
     return res.json({message : `Hello World`})
@@ -46,6 +47,9 @@ app.get('/', (req, res) => {
      and responds with a user schema including the username, password, full_name and most
      importantly, the api_token for the user. The api_token is used to ensure that the correct
      user is logged in and is checked periodically in the authenticate GET method. 
+
+    Authorization
+        Eleos Platform Key required to access ./authenticate
 
     Required Body : username, password, is_team_driver_login
         username - the username of the user
@@ -97,8 +101,20 @@ app.get('/authenticate/:token', (req, res) => {
 })
 
 /*
-    Updates needed for following call - 
-        * Connect to DB so it can return a list of loads
+    GET
+     ./loads is called to gather a list of loads within the MongoDB. Returns multiple Loads 
+     Schemas.
+
+     Authorization :
+        Eleos platform key required to access GET ./loads
+
+    Required Body : N/A
+        No body is required
+
+    Response Codes : 
+        200 - Successful
+        400 - Bad request
+        401 - Missing API key
 */
 app.get('/loads', (req, res) => {
     const EPK = req.headers['eleos-platform-key']
@@ -112,14 +128,28 @@ app.get('/loads', (req, res) => {
         console.log(load)
     }).catch((err) => {
         console.log(err)
-        res.status(401)
+        res.status(400)
     })
 })
 
 /*
-    Updates needed for the following call -
-        * Connect to DB
-        * Body params for PUT request
+    PUT
+     ./messages/:handle requires that a handle is passed through, as well as a body containing
+     at least the direction of the message, the username of the person sending/recieving a message
+     and the message type. The message is saved within the DB, and the only response sent by the 
+     server, assuming that the request is successful, is the handle.
+
+    Authorization :
+        Eleos Platform Key is required for this request
+
+    Path Parameters : Handle
+        Handle a unique identifier for each message sent/recieved
+
+    Required body : direction, username, message_type
+        direction - either inbound or outbound
+        username - recipient if outbound, sender if inbound
+        message_type - text or form
+
 */
 app.put('/messages/:handle', (req, res) => {
     const { handle } = req.params;
