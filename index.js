@@ -94,10 +94,22 @@ app.post('/authenticate', (req, res) => {
         * Only send correct response when token matches whats needed
 */
 app.get('/authenticate/:token', (req, res) => {
+    const EPK = req.headers['eleos-platform-key']
+
+    if(EPK !== process.env.ELEOS_PLATFORM_KEY){
+        return res.status(401).json({message : `Error 401 : Missing or invalid API key`})
+    }
+    
     const { token } = req.params
-    res.send({
-        message: `Found user with token: ${token}`
-    })
+
+    if( token !== 'tk001'){
+        return res.status(401).json({message : `Error 401: Missing or Invalid Token`})
+    } else {
+        Users.findOne({api_token: `${token}`}).then((user) => {
+            res.status(200).json(user)
+        })
+    }
+    
 })
 
 /*
