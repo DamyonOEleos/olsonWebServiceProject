@@ -165,10 +165,12 @@ app.get('/loads', (req, res) => {
 */
 app.put('/messages/:handle', (req, res) => {
     const { handle } = req.params;
-    const direction = req.body.direction
-    const username = req.body.username
-    const message_type = req.body.message_type
+    const { direction, username, message_type, body, form_code,
+    contact_code, read_at, deleted_at, in_reply_to_handle,
+    workflow_action, telemantics, server_validation_request, server_validation_status } = req.body
     const EPK = req.headers['eleos-platform-key']
+    const composed_at = new Date
+
 
     if(EPK !== process.env.ELEOS_PLATFORM_KEY){
         return res.status(401).json({message : `Error 401 : Missing or invalid API key`})
@@ -182,7 +184,18 @@ app.put('/messages/:handle', (req, res) => {
         direction: direction,
         username: username,
         message_type: message_type,
-        
+        body: body,
+        form_code: form_code,
+        contact_code: contact_code,
+        composed_at: composed_at,
+        read_at: read_at,
+        deleted_at: deleted_at,
+        in_reply_to_handle: in_reply_to_handle,
+        workflow_action: workflow_action,
+        telemantics: telemantics,
+        server_validation_request: server_validation_request,
+        server_validation_status: server_validation_status
+
     })
     message.save().then(
         res.json(handle)
