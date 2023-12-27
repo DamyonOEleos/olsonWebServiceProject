@@ -181,7 +181,8 @@ app.put('/messages/:handle', (req, res) => {
     const message = new Messages({
         direction: direction,
         username: username,
-        message_type: message_type
+        message_type: message_type,
+        
     })
     message.save().then(
         res.json(handle)
